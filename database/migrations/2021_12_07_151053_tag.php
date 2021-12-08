@@ -15,7 +15,7 @@ class Tag extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id('id')->index();
-            $table->integer('companie_id')->unique();
+            $table->integer('companie_id');
             $table->longText('name');
         });
     }
