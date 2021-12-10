@@ -42,9 +42,9 @@
                     @endforeach
                     </td>
                 </tr>
-
             @endforeach
         </table>
+        <a href="http://127.0.0.1:8000/add">Add companie</a>
     </div>
 </body>
 </html>

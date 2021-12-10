@@ -19,7 +19,6 @@ class Companie extends Migration
             $table->longText('url')->unique();
             $table->double('latitude', 15, 5);
             $table->double('longitude', 15, 5);
-            $table->integer('tags_id');
             $table->json('software_skils');
             $table->string('blacklisted');
             $table->string('email')->unique();
