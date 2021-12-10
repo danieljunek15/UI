@@ -1,3 +1,4 @@
+{{-- Dit is de home page waar je alle data in een tabel kunt zien, en waar je naar de add, delete, eddit page kan navigeren --}}
 <!doctype html>
 <html>
 <head>
@@ -22,6 +23,8 @@
                 <th>Address number</th>
                 <th>Province</th>
                 <th>Tags</th>
+                <th>EDDIT</th>
+                <th>DELETE</th>
             </tr>
             @foreach ($data as $row)
                 <tr>
@@ -40,6 +43,12 @@
                     @foreach ($row->tag as $tags)
                         #{{ $tags->name }},
                     @endforeach
+                    </td>
+                    <td>
+                        <a href="http://127.0.0.1:8000/home?id={{ $row->id }}">Eddit</a>
+                    </td>
+                    <td>
+                        <a href="http://127.0.0.1:8000/home?id={{ $row->id }}">Delete</a>
                     </td>
                 </tr>
             @endforeach
