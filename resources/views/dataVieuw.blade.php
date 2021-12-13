@@ -45,15 +45,26 @@
                     @endforeach
                     </td>
                     <td>
-                        <a href="http://127.0.0.1:8000/home?id={{ $row->id }}">Eddit</a>
+                        <a href="http://127.0.0.1:8000/edit?id={{ $row->id }}">Eddit</a>
                     </td>
                     <td>
-                        <a href="http://127.0.0.1:8000/home?id={{ $row->id }}">Delete</a>
+                        <a href="http://127.0.0.1:8000/delete?id={{ $row->id }}">Delete</a>
                     </td>
                 </tr>
             @endforeach
         </table>
         <a href="http://127.0.0.1:8000/add">Add companie</a>
     </div>
+    @if(Session::get('success'))
+        <div>
+            <h4>{{ Session::get('success')}}</h4>
+        </div>
+    @endif
+
+    @if(Session::get('fail'))
+        <div>
+            <h4>{{ Session::get('fail')}}</h4>
+        </div>
+    @endif
 </body>
 </html>
