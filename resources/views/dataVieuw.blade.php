@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/home.css') }}" />
 </head>
 <body>
-    <div>     
+    <div>
         <table>
             <tr>
                 <th>Name</th>
@@ -48,12 +48,12 @@
                         <a href="http://127.0.0.1:8000/edit?id={{ $row->id }}">Eddit</a>
                     </td>
                     <td>
-                        <a href="http://127.0.0.1:8000/delete?id={{ $row->id }}">Delete</a>
+                        <a href="{{ url("delete?id=$row->id") }}">Delete</a>
                     </td>
                 </tr>
             @endforeach
         </table>
-        <a href="http://127.0.0.1:8000/add">Add companie</a>
+        <a href="{{ url('/add') }}">Add companie</a>
     </div>
     @if(Session::get('success'))
         <div>

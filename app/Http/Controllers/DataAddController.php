@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCompanyRequest;
+use App\Models\Companie;
 use Illuminate\Http\Request;
 use DB;
 use App\Http\Requests;
@@ -16,47 +18,20 @@ class DataAddController extends Controller
     }
 
     // Deze function zorgd ervoor dat de companie data nettjes word opgeslagen, en de id van de nieuwe row in een session word opgeslagen.
-    public function insertIntoCompaniesTable(Request $request)
+    public function insertIntoCompaniesTable(StoreCompanyRequest $request)
     {
-        // Data valideren of ze ingevuld zijn.
-        $request->validate([
-            'companieName'=>'required',
-            'URL'=>'required',
-            'softwareSkills'=>'required',
-            'email'=>'required',
-            'postalCode'=>'required',
-            'street'=>'required',
-            'addressNumber'=>'required',
-            'province'=>'required',
-            'latitude'=>'required',
-            'longitude'=>'required',
-            'blacklisted'=>'required'
-        ]);
-
         // Dit is de querry die de data opslaat in de companie table.
-        $companieId = DB::table('companies')->insertGetId([
-            'name'=>$request->input('companieName'),
-            'url'=>$request->input('URL'),
-            'latitude'=>$request->input('latitude'),
-            'longitude'=>$request->input('longitude'),
-            'software_skils'=>$request->input('softwareSkills'),
-            'blacklisted'=>$request->input('blacklisted'),
-            'email'=>$request->input('email'),
-            'postal_code'=>$request->input('postalCode'),
-            'street'=>$request->input('street'),
-            'address_number'=>$request->input('addressNumber'),
-            'province'=>$request->input('province')
-        ]);
+        $company = Companie::create($request->all());
 
         // Hier word de nieuwe id in een session opgeslagen
-        session(['companieIdLastRowInserted' => $companieId]);
+        session(['companieIdLastRowInserted' => $company->id]);
 
         // Dit is een simpele if statment waar ik kijk of alles goed gaat zo niet dan geeft hij dat aan.
-        if($companieId) {
+        if ($company->id) {
             return back()->with('success', 'Data is saved to database');
-        }else{
-            return back()->with('fail', 'Some thing went wrong');
         }
+
+        return back()->with('fail', 'Some thing went wrong');
     }
 
     // Deze function zorgd ervoor dat de tags gesplit worden.
@@ -87,7 +62,7 @@ class DataAddController extends Controller
     // Waarom ik dit heb gedaan ? Omdat ik vind dat je beter meerdere kleine functions kan maken dan een grote voor de overzichtelijkheid.
     public function insertIntoDatabase(Request $request)
     {
-        // Hier roep ik companie table insert aan. 
+        // Hier roep ik companie table insert aan.
         self::insertIntoCompaniesTable($request);
         // Hier roep ik tags table insert aan.
         self::insertIntoTagsTable($request);

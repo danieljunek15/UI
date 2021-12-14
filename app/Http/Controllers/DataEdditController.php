@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Companie;
 use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -12,22 +13,17 @@ use App\Http\Controllers\Controller;
 class DataEdditController extends Controller
 {
     // Deze function weergeeft alle data van de geselecteerde companie.
-    public function vieuwDataOpEditPage(Request $request)
+    public function vieuwDataOpEditPage(Request $request, Companie $companie)
     {
-        // Companie id wordt met GET opgehaald
-        $idSelectedCompanieRow = $request->input('id');
-
         // Hier wordt de companie_id in een session opgeslagen.
         session(['companieIdVoorDeleteQuerry' => $request->input('id')]);
 
-        // Querry voor de companies tabel.
-        $dataCompanies = DB::table('companies')->find($idSelectedCompanieRow);
         // Querry voor de bij behoorende tags van companies.
         $dataTags = DB::table('tags')->where('companie_id', $idSelectedCompanieRow)->get();
 
         // Geeft alle data van een bedrijf door naar de vieuw.
         return view('dataEddit', [
-            'data' => $dataCompanies,
+            'data' => [$companie],
             'tags' => $dataTags
         ]);
     }
@@ -44,7 +40,7 @@ class DataEdditController extends Controller
         $request->session()->forget('companieIdVoorDeleteQuerry');
     }
 
-    // Deze function insert alle nieuw opgegeven data in de database. 
+    // Deze function insert alle nieuw opgegeven data in de database.
     public function updateCompanieData(Request $request)
     {
         // Check of alle data is ingevuld door de gebruiker
