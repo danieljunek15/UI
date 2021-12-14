@@ -17,6 +17,6 @@ Route::get('/home', 'App\Http\Controllers\DataVieuwController@showData');
 Route::get('/add', 'App\Http\Controllers\DataAddController@addDataForm');
 Route::post('/create', 'App\Http\Controllers\DataAddController@insertIntoDatabase');
 Route::get('/delete', 'App\Http\Controllers\DataDeleteController@deleteData');
-Route::get('/edit', 'App\Http\Controllers\DataEdditController@editData');
+Route::get('/edit', 'App\Http\Controllers\DataEdditController@vieuwDataOpEditPage');
 Route::post('/editUpdate', 'App\Http\Controllers\DataEdditController@updateCompanieAndTagsData');
 

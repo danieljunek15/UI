@@ -6,34 +6,48 @@ use DB;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+// use App\Models\Companie;
+// use App\Models\Tag;
 
 class DataEdditController extends Controller
 {
-    public function editData(Request $request)
+    // Deze function weergeeft alle data van de geselecteerde companie.
+    public function vieuwDataOpEditPage(Request $request)
     {
+        // Companie id wordt met GET opgehaald
         $idSelectedCompanieRow = $request->input('id');
 
-        session(['tester' => $request->input('id')]);
-        echo $request->input('id');
+        // Hier wordt de companie_id in een session opgeslagen.
+        session(['companieIdVoorDeleteQuerry' => $request->input('id')]);
 
+        // Querry voor de companies tabel.
         $dataCompanies = DB::table('companies')->find($idSelectedCompanieRow);
+        // Querry voor de bij behoorende tags van companies.
         $dataTags = DB::table('tags')->where('companie_id', $idSelectedCompanieRow)->get();
 
+        // Geeft alle data van een bedrijf door naar de vieuw.
         return view('dataEddit', [
             'data' => $dataCompanies,
             'tags' => $dataTags
         ]);
     }
 
+    // Deze function delete alle data van een bedrijf.
     public function deleteCurentCompanieAndTagsData(Request $request)
     {
-        $tagsRows = DB::table('tags')->where('companie_id', '=', session('tester'))->delete();
-        $companieRow = DB::table('companies')->where('id', '=', session('tester'))->delete();
-        $request->session()->forget('tester');
+        // Querry voor het delete van alle bedrijfen
+        $companieRow = DB::table('companies')->where('id', '=', session('companieIdVoorDeleteQuerry'))->delete();
+        // Querry voor het delete van alle tags.
+        $tagsRows = DB::table('tags')->where('companie_id', '=', session('companieIdVoorDeleteQuerry'))->delete();
+
+        // Verwijderd de session.
+        $request->session()->forget('companieIdVoorDeleteQuerry');
     }
 
+    // Deze function insert alle nieuw opgegeven data in de database. 
     public function updateCompanieData(Request $request)
     {
+        // Check of alle data is ingevuld door de gebruiker
         $request->validate([
             'companieName'=>'required',
             'URL'=>'required',
@@ -48,6 +62,7 @@ class DataEdditController extends Controller
             'blacklisted'=>'required'
         ]);
 
+        // Querry die alle companies data in de database opslaat.
         $companieId = DB::table('companies')->insertGetId([
             'name'=>$request->input('companieName'),
             'url'=>$request->input('URL'),
@@ -62,29 +77,38 @@ class DataEdditController extends Controller
             'province'=>$request->input('province')
         ]);
 
+        // Hier wordt een session aangemaakt, met het id van de companies tabel.
         session(['companieIdLastRowInserted' => $companieId]);
     }
 
+    // Querry die alle tags data in de database opslaat.
     public function updateTagsData(Request $request)
     {
+        // Checken of alle data er is.
         $request->validate([
             'tags'=>'required'
         ]);
 
+        // Onderschijds tags met behulp van een spatie, en zet dit in een array.
         $explodedTags = explode(" ", $request->input('tags'));
 
+        // Insert voor elke key => value in de array een tag voor de tags tabel, met het zelfde companie_id als id in companies.
         foreach ($explodedTags as $tag) {
+            // Companie_id zit nog in de session, waarbij een tag naam komt te staan.
             $query = DB::table('tags')->insert([
                 'companie_id'=>session('companieIdLastRowInserted'),
                 'name'=>$tag
             ]);
         }
 
+        // Session wordt verwijderd.
         $request->session()->forget('companieIdLastRowInserted');
     }
 
+    // Deze function voerd alle functions in de juiste volgorde uit, en je wordt terug gestuurt naar het overzicht.
     public function updateCompanieAndTagsData(Request $request)
     {
+        // Self is voor laravel een function dat hij moet zoeken voor de function in zijn eigen class.
         self::deleteCurentCompanieAndTagsData($request);
         self::updateCompanieData($request);
         self::updateTagsData($request);

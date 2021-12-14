@@ -16,7 +16,7 @@ class Companie extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id('id')->index();
             $table->string('name')->unique();
-            $table->longText('url')->unique();
+            $table->longText('url');
             $table->double('latitude', 15, 5);
             $table->double('longitude', 15, 5);
             $table->json('software_skils');
