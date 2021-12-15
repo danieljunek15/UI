@@ -27,33 +27,33 @@
                 <th>DELETE</th>
             </tr>
             @foreach ($data as $row)
-                <tr>
-                    <td>{{ $row->name }}</td>
-                    <td>{{ $row->url }}</td>
-                    <td>{{ $row->latitude }}</td>
-                    <td>{{ $row->longitude }}</td>
-                    <td>{{ $row->software_skils }}</td>
-                    <td>{{ $row->blacklisted }}</td>
-                    <td>{{ $row->email }}</td>
-                    <td>{{ $row->postal_code }}</td>
-                    <td>{{ $row->street }}</td>
-                    <td>{{ $row->address_number }}</td>
-                    <td>{{ $row->province }}</td>
-                    <td>
-                    @foreach ($row->tag as $tags)
-                        #{{ $tags->name }},
-                    @endforeach
-                    </td>
-                    <td>
-                        <a href="http://127.0.0.1:8000/edit?id={{ $row->id }}">Eddit</a>
-                    </td>
-                    <td>
-                        <a href="http://127.0.0.1:8000/delete?id={{ $row->id }}">Delete</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>{{ $row->name }}</td>
+                <td><a href="{{ $row->url }}">{{ $row->name }} website.</a></td>
+                <td>{{ $row->latitude }}</td>
+                <td>{{ $row->longitude }}</td>
+                <td>{{ $row->software_skils }}</td>
+                <td>{{ $row->blacklisted }}</td>
+                <td>{{ $row->email }}</td>
+                <td>{{ $row->postal_code }}</td>
+                <td>{{ $row->street }}</td>
+                <td>{{ $row->address_number }}</td>
+                <td>{{ $row->province }}</td>
+                <td>
+                @foreach ($row->tag as $tags)
+                    #{{ $tags->name }},
+                @endforeach
+                </td>
+                <td>
+                    <a href="{{ url("edit/{$row->id}") }}">Eddit</a>
+                </td>
+                <td>
+                    <a href="{{ url("delete/{$row->id}") }}">Delete</a>
+                </td>
+            </tr>
             @endforeach
         </table>
-        <a href="http://127.0.0.1:8000/add">Add companie</a>
+        <a href="{{ url('/add') }}">Add companie</a>
     </div>
     @if(Session::get('success'))
         <div>

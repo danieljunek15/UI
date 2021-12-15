@@ -13,10 +13,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', 'App\Http\Controllers\DataVieuwController@showData');
-Route::get('/add', 'App\Http\Controllers\DataAddController@addDataForm');
-Route::post('/create', 'App\Http\Controllers\DataAddController@insertIntoDatabase');
-Route::get('/delete', 'App\Http\Controllers\DataDeleteController@deleteData');
-Route::get('/edit', 'App\Http\Controllers\DataEdditController@vieuwDataOpEditPage');
-Route::post('/editUpdate', 'App\Http\Controllers\DataEdditController@updateCompanieAndTagsData');
 
+Route::get('', [\App\Http\Controllers\CompanyController::class, 'login']); 
+Route::get('/home', [\App\Http\Controllers\CompanyController::class, 'show']);
+Route::get('/add', [\App\Http\Controllers\CompanyController::class, 'create']);
+Route::post('/add/create', [\App\Http\Controllers\CompanyController::class, 'store']);
+Route::get('/delete/{id}', [\App\Http\Controllers\CompanyController::class, 'destroy']);
+Route::get('/edit/{id}', [\App\Http\Controllers\CompanyController::class, 'edit']);
+Route::post('/edit/update/{id}', [\App\Http\Controllers\CompanyController::class, 'update']);

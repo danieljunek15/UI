@@ -9,8 +9,15 @@ class Tag extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'companie_id',
+        'name'
+    ];
+
+    public $timestamps = false;
+
     public function companie()
     {
-        return $this->belongsTo(Companie::class);
+        return $this->belongsTo(Company::class);
     }
 }

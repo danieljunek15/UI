@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>UI</title>
+    <title>Add company page</title>
     <meta name="description" content="Our first page" />
     <meta name="keywords" content="html tutorial template" />
     <link rel="stylesheet" href="{{ URL::asset('css/home.css') }}" />
@@ -21,26 +21,26 @@
         </div>
     @endif
 
-    <form action="/create" method="post">
+    <form action="/add/create" method="POST">
     @csrf
         <div>
-            <label for="companieName">Companie name:</label><br>
-            <input name="companieName" type="text"><br>
-            <label for="URL">Companie webpage url</label><br>
-            <input name="URL" type="text"><br>
-            <label for="softwareSkills">Software skills:</label><br>
-            <textarea name="softwareSkills"></textarea><br>
+            <label for="name">Companie name:</label><br>
+            <input name="name" type="text"><br>
+            <label for="url">Companie webpage url</label><br>
+            <input name="url" type="text"><br>
+            <label for="software_skils">Software skills:</label><br>
+            <textarea name="software_skils"></textarea><br>
             <label for="email">Email:</label><br>
             <input name="email" type="text"><br>
         </div>
         <br><br><br>
         <div class="locationAndAddress">
-            <label for="postalCode">Postal code:</label><br>
-            <input name="postalCode" type="text"><br>
+            <label for="postal_code">Postal code:</label><br>
+            <input name="postal_code" type="text"><br>
             <label for="street">Street:</label><br>
             <input name="street" type="text"><br>
-            <label for="addressNumber">Address number:</label><br>
-            <input name="addressNumber" type="text"><br>
+            <label for="address_number">Address number:</label><br>
+            <input name="address_number" type="text"><br>
             <label for="province">Province:</label><br>
             <input name="province" type="text"><br>
         </div>
