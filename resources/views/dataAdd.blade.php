@@ -21,6 +21,8 @@
             </div>
         @endif
 
+        <a href="{{ url('/data') }}">Back</a>
+
         <form action="/add/create" method="POST">
         @csrf
             <div>

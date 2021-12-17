@@ -54,12 +54,9 @@
             </tr>
             @endforeach
         </table>
-        <a href="{{ url('/add') }}">Add companie</a>
-        @if (Route::has('register'))
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-            </li>
-        @endif
+        
+        <a href="{{ url('/add') }}">Add companie</a><br><br>
+        <a href="{{ route('register') }}">{{ __('Register') }}</a>
     </div>
     @if(Session::get('success'))
         <div>

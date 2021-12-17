@@ -21,6 +21,8 @@
             </div>
         @endif
 
+        <a href="{{ url('/data') }}">Home</a>
+        
         <form action="/edit/update/{{ $data->id }}" method="POST">
         @csrf
             <div>
