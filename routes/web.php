@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
-Route::get('', [\App\Http\Controllers\CompanyController::class, 'login']); 
-Route::get('/home', [\App\Http\Controllers\CompanyController::class, 'show']);
+Route::get('/data', [\App\Http\Controllers\CompanyController::class, 'show']);
 Route::get('/add', [\App\Http\Controllers\CompanyController::class, 'create']);
 Route::post('/add/create', [\App\Http\Controllers\CompanyController::class, 'store']);
 Route::get('/delete/{id}', [\App\Http\Controllers\CompanyController::class, 'destroy']);
 Route::get('/edit/{id}', [\App\Http\Controllers\CompanyController::class, 'edit']);
 Route::post('/edit/update/{id}', [\App\Http\Controllers\CompanyController::class, 'update']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

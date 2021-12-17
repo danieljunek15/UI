@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+ 
 use App\Http\Requests\StoreCompanyRequest;
 use App\Models\Company;
 use App\Models\Tag;
@@ -9,16 +9,9 @@ use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function login()
-    {
-        return view('login');
+    public function __construct(){
+        $this->middleware('auth');
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -51,7 +44,7 @@ class CompanyController extends Controller
             );
             $tagId = Tag::create($tagsInsertArray);
         }
-        return redirect('/home');
+        return redirect('/data');
     }
 
     /**
@@ -133,7 +126,7 @@ class CompanyController extends Controller
             $tagId = Tag::create($tagsInsertArray);
         }
 
-        return redirect('/home');
+        return redirect('/data');
     }
 
     /**
@@ -142,6 +135,7 @@ class CompanyController extends Controller
      * @param  \App\Models\Company  $company
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
         $company = Company::find($id);
@@ -154,6 +148,6 @@ class CompanyController extends Controller
         }
 
         return back()->with('fail', 'Some thing went wrong');
-        return redirect('/home');
+        return redirect('/data');
     }
 }

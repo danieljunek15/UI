@@ -1,4 +1,5 @@
 {{-- Dit is de home page waar je alle data in een tabel kunt zien, en waar je naar de add, delete, eddit page kan navigeren --}}
+@if (Auth::user())
 <!doctype html>
 <html>
 <head>
@@ -68,3 +69,4 @@
     @endif
 </body>
 </html>
+@endif
